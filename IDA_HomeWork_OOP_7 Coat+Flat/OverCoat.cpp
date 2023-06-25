@@ -46,12 +46,14 @@ std::string OverCoat::Open_Interface_Info()
 
 bool OverCoat::operator>(const OverCoat& obj) const
 {
+	if (_length != obj._length) return false;
 	if (_price > obj._price) return true;
 	return false;
 }
 
 bool OverCoat::operator<(const OverCoat& obj) const
 {
+	if (_length != obj._length) return false;
 	if (_price < obj._price) return true;
 	return false;
 }
