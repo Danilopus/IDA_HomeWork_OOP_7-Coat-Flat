@@ -11,65 +11,64 @@
 #include "UnitTest.h"
 
 
-std::map <int, std::string> keycodes{ {27, "Esc"}, {13, "Enter"}, {48, "0"}, {57, "9"} };
-std::string console_clear = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
-std::string big_space = "                                                           ";
-std::map <int, int> codes_of_digits{ {49, 0}, {50, 1}, {51, 2},{52, 3},{53, 4},{54, 5},{55, 6},{56, 7},{57, 8} };
-// Операции с дробями 
-//std::map <int, std::string> Fraction::codes_of_operation{ {1," + "}, {2," - "}, {3," * "}, {4, " / "}, {5, "++"}, {6,"++"}, {7, "--"}, {8,"--"},{9,"+"}, {0, "-"} };
-
-
-std::map <int, std::string> Contain_and_Handle::codes_of_operation{ {1," + "}, {2," - "}, {3," * "}, {4, " / "}, {5, " * "}, {6," / "}, {7, " > "}, {8," < "},{9," = "}, {0, "=="}, {11, " ++"} };
-
-
 class Contain_and_Handle
 {
 	static std::vector <OverCoat*> _objects_list;
 	static std::map <int, std::string> codes_of_operation;
 public:
 	
-	static void Initialisation(int random_number)
+	static void OverCoat_Initialisation(int random_number)
 	{
 
 		for (int i = 0; i < random_number; i++)
 		{
-			OverCoat* new_item = new OverCoat('rand');		
+			OverCoat* new_item = new OverCoat('rand');	
+			_objects_list.push_back(new_item);
 		}
 
 	}
 
-
 	// Shows ---------------------------------------------------------------	
+	
 	static void ShowAvailableObjects();
+	static void OverCoat_ShowClassInformation(std::string class_name)
+	{
+		std::cout << "\n\n***\t" << class_name << " class info:\n";
+		std::cout << OverCoat::Open_Interface_Info();
+		ShowAvailableOperations();
+	}
+	static void ShowAvailableOperations()
+	{		
+		std::vector <int>& methods = OverCoat::Get_methods();
+
+		std::cout << "\n\nOverloaded operations:";
+		for (int i = 0; i < methods.size(); i++)
+			std::cout <<"\n"<<i+1<<") " << codes_of_operation[methods[i]];
+		delete& methods;
+	}
 
 
 	// Inputs handle -------------------------------------------------------	
 
-	static void Mode_Input_Handle()
+	static int Mode_Input_Handle()
 	{
 		std::cout << "\nChoose mode :";
-		std::cout << "\n1. SELF test mode";
-		std::cout << "\n2. Interactive mode\n";
+		std::cout << "\n1. Class info";
+		std::cout << "\n2. SELF test mode";
+		std::cout << "\n3. Interactive mode\n";
 
-		switch (_getch_to_int(1, 2))
+		switch (_getch_to_int(1, 3))
 		{
-		case -1: return;
-		case 1: UnitTest::OverCoat_test(); break;
-		case 2: UserChoiceHandle_getch; break;
+		case -1: return -1;
+		case 1: OverCoat_ShowClassInformation("OverCoat"); break;
+		case 2: std::cout << UnitTest::OverCoat_test(); break;
+		case 3: UserChoiceHandle_getch; break;
 		}
-
+		//_getch();
+		return 0;
 		//return _getch_to_int(1,2);
 	}
-	static int _getch_to_int(int minimum=0, int maximum=9)
-	{	
-			int keycode = _getch();
-			if (keycode == 27) return -1;			
-			if ((keycode >= 48 +minimum) && (keycode <= 48+ maximum))
-				return (keycode - 48);
-			//std::cout << "\nkeycode " << keycode;
-			std::cout << "Press a number [" << minimum << ".." << maximum << "] ";
-			_getch_to_int(minimum, maximum);		
-	}
+	static int _getch_to_int(int minimum = 0, int maximum = 9);
 
 
 // getch модификация - удобный интерфейс ввода без нажатия Enter и с обработкой Esc, пока только для списков 0..9 (надо придумать как принимать одно- и двух-циферные значения в одном интерфейсе через _getch

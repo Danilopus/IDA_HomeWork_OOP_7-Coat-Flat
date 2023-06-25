@@ -1,300 +1,91 @@
 ﻿#include "OverCoat.h"
 
+std::map<int, std::string> Type_by_length_codename{ {0, "Top"} ,{1, "Jacket"},{2, "Manto"} };
+std::map<int, std::string> Manufacter_codename{ {0, "BOSS"} ,{1, "ZARA"},{2, "HandM"}, {3, "noname"}, {4, "adidas"},
+	{5, "NorthFace"}, {6, "Columbia"}, {7, "UNICLO"} };
+std::map<int, std::string> Colors_codename{ {0, "black"} ,{1, "brown"},{2, "yellow"}, {3, "white"}, {4, "indigo"} };
+std::map<int, std::string> Material_codename{ {0, "Fur"} ,{1, "Leather"},{2, "Textile"}, {3, "Syntetic"}, {4, "Down"} };
+std::map<int, std::string> Size_codename{ {0, "kid"} ,{1, "XXS"},{2, "XS"}, {3, "S"}, {4, "M"},{5, "L"}, {6, "XL"}, {7, "XXL"} };
 
-std::vector <Money> Money::_money_list;
 
-Money::Money(long long coins, long long roubles) 
-{ 
-	Set_roubles(roubles).Set_coins(coins); 
-	_money_list.push_back(*this); 
-	// delete this;
-}
-
-void Money::Initialisation(int provided_at_startup_money_holders_quantity)
+OverCoat::OverCoat(char random_flag)
 {
-	for (int i = 0; i < provided_at_startup_money_holders_quantity; i++)
-		new Money(Get_Random(0, 100), Get_Random(0, 100));
+	//OverCoat* new_item = new OverCoat;
+	_length = static_cast<Overcoat_length_type>(Get_Random(0, int(Overcoat_length_type::terminator)));
+	_manufacter = static_cast<Manufacter>(Get_Random(0, int(Manufacter::terminator)));
+	_color = static_cast<OverCoat_colors>(Get_Random(0, int(OverCoat_colors::terminator)));
+	_material_type = static_cast<Material_type>(Get_Random(0, int(Material_type::terminator)));
+	_size = static_cast<Dress_size>(Get_Random(0, int(Dress_size::terminator)));
+	_price = Get_Random(2000, 5000);
 }
 
-void Money::Memory_Clean()
+std::vector<int>& OverCoat::Get_methods()
 {
-	//for (int i = 0; i < _money_list.size(); i++)
-	//	delete[] &_money_list[i];
-	_money_list.clear();
+	//codes_of_operation
+	//{ {1," + "}, {2," - "}, {3," * "}, {4, " / "}, {5, " * "}, {6," / "}, {7, " > "}, {8," < "},{9," = "}, {0, "=="} };
+
+	//std::vector <int> available_operations{ 7 /* > */, 8 /* < */, 9 /* = */, 0/* == */ };
+
+
+	std::vector <int>* available_operations = new std::vector <int> { 7 /* > */, 8 /* < */, 9 /* = */, 0/* == */ };
+	//std::map <int, int> available_operands {{}}
+	return *available_operations;
 }
 
-Money& Money::Set_roubles(long long rubles) { _roubles = rubles; return *this; }
-
-Money& Money::Set_coins(long long coins)
+std::string OverCoat::Open_Interface_Info()
 {
-	_coins = coins % 100;
-	Set_roubles(_roubles += (coins / 100));
-	return *this;
+	std::string Open_Interface_Info;
+	Open_Interface_Info += "\nConstructors:\n- Random (char parametr)\n- Detailed (all fields)";
+	Open_Interface_Info += "\n\nMethods:";
+	Open_Interface_Info += "\n1) ShowValues()";
+	Open_Interface_Info += "\n2) Set_comment(string)";
+	Open_Interface_Info += "\n3) Set_price(double)";
+
+	return Open_Interface_Info;
 }
 
-void Money::ShowMethods()
+bool OverCoat::operator>(const OverCoat& obj) const
 {
-	std::cout << "\n\n -------- Available methods: --------\n";
-	std::cout << "Summation [+] -> [1]" << "\t\t" << "Multyply by [real] -> [5]" << '\n';
-	std::cout << "Substract [-] -> [2]" << "\t\t" << "Divide   by [real] -> [6]" << '\n';
-	std::cout << "Multiply  [*] -> [3]" << "\t\t" << "is_more     [>]    -> [7]" << '\n';
-	std::cout << "Divide    [/] -> [4]" << "\t\t" << "is_less     [<]    -> [8]" << '\n';
-	std::cout <<     "                                is_equal    [=]    -> [9]" << '\n';
-
-
-	// Вариант от дробей	
-	/*std::cout << "\nAvailable methods:\n\nBinary:\t\t\t\t" << "Unary:\n";
-	std::cout << "Summation [+] -> [1]" << "\t\t" << "Prefix increment  [++v] -> [5]" << '\n';
-	std::cout << "Substract [-] -> [2]" << "\t\t" << "Postfix increment [v++] -> [6]" << '\n';
-	std::cout << "Multiply  [*] -> [3]" << "\t\t" << "Prefix decrement  [--v] -> [7]" << '\n';
-	std::cout << "Divide    [/] -> [4]" << "\t\t" << "Postfix decrement [v--] -> [8]" << '\n';
-	std::cout << "\t\t\t\tUnary plus        [+v]  -> [9]" << '\n';
-	std::cout << "\t\t\t\tUnary minus       [-v]  -> [0]" << '\n';*/
-
+	if (_price > obj._price) return true;
+	return false;
 }
 
-void Money::ShowAvailableMoneyObjects()
+bool OverCoat::operator<(const OverCoat& obj) const
 {
-	for (int i = 0; i < _money_list.size(); i++)
-		std::cout << "\nMoney holder [" << i + 1 << "] -> " << _money_list[i];
-	//_money_list[i].ShowValues();
+	if (_price < obj._price) return true;
+	return false;
 }
 
-int Money::UserChoiceHandle_getch()
+bool OverCoat::operator==(const OverCoat& obj) const
 {
-	std::cout << "Choose method: ";
-	int method_choice = Check_method_input_getch();
-	if (method_choice == -1) return 1;
-	std::cout << "-------->  " << codes_of_operation[method_choice] << big_space;
-
-
-	if (method_choice < 5 || method_choice > 6)//разделеям бинарные операции между объектами и числами
-	{
-		Money& Operand_1 = *Get_Operand_getch(1);
-		if (&Operand_1 == nullptr) return 0;
-		std::cout << "\n   " << codes_of_operation[method_choice];
-		Money& Operand_2 = *Get_Operand_getch(2);
-		if (&Operand_2 == nullptr) return 0;
-
-		Operation_module(method_choice, Operand_1, Operand_2);
-
-	}
-	else
-	{
-		Money& Operand_1 = *Get_Operand_getch(1);
-		if (&Operand_1 == nullptr) return 0;
-		std::cout << "\nEnter a [real] -> ";
-		double Operand_2 = Get_Dbl_Positive();
-		if (Operand_2 == 0) { std::cout << "Division by zero"; return 0; }
-
-
-		Operation_module(method_choice, Operand_1, Operand_2);
-	}
-
-
-	return 0;
+	if (_length == obj._length) return true;
+	return false;
 }
 
-int Money::UserChoiceHandle_getline()
+void OverCoat::operator=(const OverCoat& obj)
 {
-	int action = Check_action_input_getline();
-	if (action == -1) return 1;
-	std::cout << "-------->  " << codes_of_operation[action] << big_space;
-
-
-	Money& Operand_1 = Get_Operand_getline(1);
-	if (&Operand_1 == nullptr) return 1;
-	std::cout << "\n   " << codes_of_operation[action];
-	Money& Operand_2 = Get_Operand_getline(2);
-	if (&Operand_2 == nullptr) return 1;
-
-	Operation_module(action, Operand_1, Operand_2);
+	_length = obj._length;
+	_manufacter = obj._manufacter;
+	_color = obj._color;
+	_material_type = obj._material_type;
+	_size = static_cast<Dress_size>(Get_Random(0, int(Dress_size::terminator)));
+	_price = obj._price; //rub
+	_comment = obj._comment;
 }
-
-Money* Money::Get_Operand_getch(int Operand_number)
-//static Money& Get_Operand_getch(int Operand_number)
+bool OverCoat::operator!=(double price) const
 {
-	if (Operand_number)
-		std::cout << "\nOperand_" << Operand_number << ": Choose operand from list [press number] or enter new [press Enter]";
-	else std::cout << "\nOperand" << ": Choose operand from list [press number] or enter new [press Enter]";
-
-	do
-	{
-		int input = _getch();
-		//std::cout << console_clear;
-		if (keycodes[input] == "Enter")
-			//if (input == 27)
-		{
-			std::cout << console_clear;
-			return &New_money_holder_input();
-		}
-		else if (keycodes[input] == "Esc") return nullptr;
-		//else if (input == 27) return;
-		/*else if (input == 0 || input == 224) // обработка KeyPad + NumLock [off] и всякие другие двойные кнопки [стрелочки, Del, End, PageDown итп]
-		{
-			_getch();
-			std::cout << "\nTurn NumLock On";
-			return nullptr;
-		}*/
-		else if (49 <= input && input <= 57)
-		{
-			//_getch(); придумать 2х значный ввод
-			std::cout << console_clear;
-			if (codes_of_digits[input] >= _money_list.size())
-			{
-				std::cout << console_clear << "index out of range" << big_space;
-				return nullptr;
-			}
-			std::cout << "  [" << codes_of_digits[input] + 1 << "]                                                        ";
-			return &_money_list[codes_of_digits[input]];
-		}
-	} while (true);
+	if (_price != price) return true;
+	return false;
 }
-
-Money& Money::Get_Operand_getline(int Operand_number) {
-
-	if (Operand_number)	std::cout << "\nchoose operand " << Operand_number << ": ";
-	else std::cout << "\nchoose operand: ";
-	std::string comment = "index out of range ";
-	comment += "[1.." + std::to_string(_money_list.size()) + "] ";
-	int Money_index = Get_Int_Positive(1, _money_list.size(), comment);
-	--Money_index; //transform number to index
-
-	return _money_list[Money_index];
-}
-
-Money& Money::New_money_holder_input()
+std::ostream& operator<<(std::ostream& out, OverCoat& obj)
 {
-	std::cout << big_space;
-	std::cout << "\nEnter roubles -> ";
-	long long roubles = Get_Int_Positive();
-	std::cout << "Enter coins   -> ";
-	int coins = Get_Int_Positive();
+	out << std::endl << "Type:    " << Type_by_length_codename[int(obj._length)];
+	out << std::endl << "Brand:   " << Manufacter_codename[int(obj._manufacter)];
+	out << std::endl << "Color:   " << Colors_codename[int(obj._color)];
+	out << std::endl << "Material:" << Material_codename[int(obj._material_type)];
+	out << std::endl << "Size:    " << Size_codename[int(obj._size)];
+	out << std::endl << "Price:   " << obj._price;
+	out << std::endl << "Comment: " << obj._comment;
 
-	return *new Money(coins, roubles);
-}
-
-int Money::Check_method_input_getch()
-{
-	int keycode = _getch();
-	std::cout << console_clear;
-	if (keycode == 27) return -1;
-	if (keycode >= 48 && keycode <= 57)
-		return (keycode - 48);
-	//std::cout << "\nkeycode " << keycode;
-	std::cout << "Press a number of operation [1..9]";
-	Check_method_input_getch();
-}
-
-int Money::Check_action_input_getline()
-{
-	int keycode = Get_Int_Positive(1, 9, "Choose a number of operation [1..9] ");
-	std::cout << console_clear;
-	//if (keycode == 27) return -1;
-	//std::cout << "\nkeycode " << keycode;
-	//std::cout << "Press a number of operation [0..9]";
-	return keycode;
-}
-
-void Money::Operation_module(int action, Money& Operand_1, Money& Operand_2)
-{
-	std::cout << "\n\n" << Operand_1 << codes_of_operation[action] << Operand_2 << " = ";
-	bool logical_statement = 0;
-	double percent = 100;
-	switch (action)
-	{
-	case 1: Operand_1 + Operand_2; break;
-	case 2: Operand_1 - Operand_2; break;
-	case 3: Operand_1 * Operand_2; break;
-	case 4: percent = (Operand_1 / Operand_2); break;
-		//case 5: ++Operand; break;
-		//case 6: Operand++; break;
-	case 7: logical_statement = (Operand_1 > Operand_2); break;
-	case 8: logical_statement = (Operand_1 < Operand_2); break;
-	case 9: logical_statement = (Operand_1 == Operand_2); break;
-		//case 0: -Operand; break;
-	}
-	if (action >= 7)
-		if (logical_statement) std::cout << "true";
-		else	std::cout << "false";
-	else if (action == 4)
-		std::cout << percent << "%";
-	else
-		std::cout << _money_list[_money_list.size() - 1];
-}
-
-void Money::Operation_module(int action, Money& Operand_1, double Operand_2)
-{
-	std::cout << "\n\n" << Operand_1 << codes_of_operation[action] << Operand_2 << " = ";
-	switch (action)
-	{
-	case 5: Operand_1 * Operand_2; break;
-	case 6: Operand_1 / Operand_2; break;
-		//case 0: -Operand; break;
-	}
-	std::cout << _money_list[_money_list.size() - 1];
-}
-
-Money& Money::operator+(const Money& another_Money) const
-{
-	return *new Money((_coins + another_Money._coins), (_roubles + another_Money._roubles));
-}
-
-Money& Money::operator-(const Money& another_Money) const
-{
-	long long full_coin_amount = (_roubles * 100 + _coins) - (another_Money._roubles * 100 + another_Money._coins);
-	assert((full_coin_amount >= 0) && "Debt");
-	return *new Money(full_coin_amount);
-}
-
-Money& Money::operator*(const Money& another_Money) const
-{
-	return *new Money((_coins * another_Money._coins), (_roubles * another_Money._roubles));
-}
-
-Money& Money::operator*(double multiplier) const
-{
-	return *new Money(long long((_coins + _roubles * 100) * multiplier));
-}
-
-Money& Money::operator/(double divider) const
-{
-	return *new Money((_coins + _roubles * 100) / divider);
-}
-
-double Money::operator/(const Money& another_Money) const //процент какая первая сумма от второй
-{
-	double coefficient = double((_roubles * 100 + _coins)) / double((another_Money._roubles * 100 + another_Money._coins));
-	return coefficient * 100;
-}
-
-bool Money::operator>(const Money& another_Money) const
-{
-	long long full_coin_amount = (_roubles * 100 + _coins) - (another_Money._roubles * 100 + another_Money._coins);
-	return (full_coin_amount < 0 ? 0 : 1);
-}
-
-bool Money::operator<(const Money& another_Money) const
-{
-	long long full_coin_amount = (_roubles * 100 + _coins) - (another_Money._roubles * 100 + another_Money._coins);
-	return (full_coin_amount < 0 ? 1 : 0);
-}
-
-bool Money::operator==(const Money& another_Money) const
-{
-	long long full_coin_amount = (_roubles * 100 + _coins) - (another_Money._roubles * 100 + another_Money._coins);
-	return (full_coin_amount == 0 ? 1 : 0);
-}
-
-std::ostream& operator<<(std::ostream& out, Money* just_a_Money)
-{
-	out << just_a_Money->Get_roubles() << " roubles" << just_a_Money->Get_coins() << " coins";
-	return out;
-}
-
-std::ostream& operator<<(std::ostream& out, Money& Money_holder)
-{
-	//out << Money_holder.Get_roubles() << ", " << Money_holder.Get_coins();
-	out << Money_holder.Get_roubles() << " roubles " << Money_holder.Get_coins() << " coins ";
 	return out;
 }

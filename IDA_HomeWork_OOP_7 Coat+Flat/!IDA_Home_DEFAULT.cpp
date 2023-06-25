@@ -32,6 +32,7 @@
 #include "Service functions.h"
 #include "MainMenu.h"
 #include "OverCoat.h"
+#include "Contain_and_Handle.h"
 
 
 
@@ -41,19 +42,17 @@
 //Task 10 Overcoat class demo with overloaded operators: = | == | < | > 
 void Task_1(std::string name_of_task)
 {
-	OverCoat::Initialisation(Get_Random(5,10));
+	Contain_and_Handle::OverCoat_Initialisation(Get_Random(5,10));
 
 	do
-	{
+	{		
 		system("cls");
-		std::cout << "***\t" << name_of_task << "\n";
-		Money::ShowAvailableObjects();
-		Money::ShowMethods();
-		if (Money::UserChoiceHandle_getch()) break;
+		std::cout << "***\t" << name_of_task << "\n";					
+	
+		if (Contain_and_Handle::Mode_Input_Handle()) break;
 
 		std::cout << "\n\nEsc - exit | any key to continue";
 	} while (_getch() != 27);
-	Money::Memory_Clean();
 }
 
 //Task 2
