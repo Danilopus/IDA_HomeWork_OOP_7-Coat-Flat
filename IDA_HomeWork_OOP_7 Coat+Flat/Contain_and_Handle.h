@@ -17,6 +17,14 @@ class Contain_and_Handle
 	static std::map <int, std::string> codes_of_operation;
 public:
 	
+	static void Memory_Clean()
+	{
+		for (int i = 0; i < _objects_list.size(); i++)
+			delete _objects_list[i];
+		_objects_list.clear();
+
+	}
+	
 	static void OverCoat_Initialisation(int random_number)
 	{
 

@@ -39,7 +39,7 @@
 // Homework OOP 07 ----------------------------------------------------	
 
 
-//Task 10 Overcoat class demo with overloaded operators: = | == | < | > 
+//Task 1 Overcoat class demo with overloaded operators: = | == | < | > 
 void Task_1(std::string name_of_task)
 {
 	Contain_and_Handle::OverCoat_Initialisation(Get_Random(5,10));
@@ -53,6 +53,7 @@ void Task_1(std::string name_of_task)
 
 		std::cout << "\n\nEsc - exit | any key to continue";
 	} while (_getch() != 27);
+	Contain_and_Handle::Memory_Clean();
 }
 
 //Task 2
@@ -73,7 +74,7 @@ int main()
 	Main_menu MainMenu;	
 	MainMenu.AddElement("OOP Home Work 07: ");	// Homework name
 	MainMenu.AddElement("Overcoat class demo with overloaded operators: = | == | < | > ");
-	MainMenu.AddElement("Flat class demo with overloaded operators: = | == | < | > ");
+	//MainMenu.AddElement("Flat class demo with overloaded operators: = | == | < | > ");
 
 	//MainMenu.AddElement("XXX");
 

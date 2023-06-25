@@ -26,7 +26,7 @@ public:
 	OverCoat(Overcoat_length_type length, Manufacter _manufacter, OverCoat_colors color, Material_type overcoat_material_type, Dress_size size, std::string comment, double _price);
 	OverCoat(char random_flag);
 
-	~OverCoat()	{}
+	~OverCoat() { } //std::cout << "destructor"; _getch();	}
 
 	// Setters // Getters --------------------------------------------------
 	OverCoat& Set_comment(std::string comment) { _comment = comment; return *this; }
