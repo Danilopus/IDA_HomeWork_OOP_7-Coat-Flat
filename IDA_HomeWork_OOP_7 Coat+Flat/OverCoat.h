@@ -79,20 +79,40 @@ public:
 
 	//Overload operators ---------------------------------------------------
 		
-	bool operator > (const OverCoat& another_Money) const;
+	bool operator > (const OverCoat& obj) const
+	{
+		if (_price > obj._price) return true;
+		return false;
+	}
 	
-	bool operator < (const OverCoat& another_Money) const;
+	bool operator < (const OverCoat& obj) const
+	{
+		if (_price < obj._price) return true;
+		return false;
+	}
 	
-	bool operator == (const OverCoat& another_Money) const;
+	bool operator == (const OverCoat& obj) const
+	{
+		if (_length == obj._length) return true;
+		return false;
+	}
 
-	bool operator = (const OverCoat& another_Money);
+	bool operator = (const OverCoat& obj) 
+	{
+		_length = obj._length;
+		_manufacter = obj._manufacter;
+		_color = obj._color;
+		_material_type = obj._material_type;
+		_size = static_cast<Dress_size>(Get_Random(0, int(Dress_size::terminator)));
+		_price = obj._price; //rub
+	}
 
 
-	friend std::ostream& operator << (std::ostream& out, OverCoat* just_a_Money);
-	friend std::ostream& operator << (std::ostream& out, OverCoat& OverCoat_obj)
+	friend std::ostream& operator << (std::ostream& out, OverCoat* obj);
+	friend std::ostream& operator << (std::ostream& out, OverCoat& obj)
 	{
 		//std::cout << std::endl << OverCoat_obj._length;
-		std::cout << std::endl << Manufacter_codename[int(OverCoat_obj._manufacter)];
+		std::cout << std::endl << Manufacter_codename[int(obj._manufacter)];
 
 	}
 };
