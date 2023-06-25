@@ -5,14 +5,12 @@
 #include <iostream>
 #include "Service functions.h"
 #include <conio.h>
-#include <iomanip>
-#include <cassert>
 
 enum class Manufacter {BOSS, ZARA, HandM, noname, adidas, terminator};
 enum class Material_type { Fur, Leather, Textile, Syntetic, terminator};
 enum class OverCoat_colors {black, brown, yellow, white, purple, indigo, terminator};
-enum Overcoat_length_type {top, jacket, manto, terminator};
-enum Dress_size { kid, XXS, XS, S, M, L, XL, XXL, terminator};
+enum class Overcoat_length_type {top, jacket, manto, terminator};
+enum class Dress_size { kid, XXS, XS, S, M, L, XL, XXL, terminator};
 std::map<int, std::string> Manufacter_codename{ {0, "BOSS"} ,{1, "ZARA"},{2, "HandM"}, {3, "noname"}, {4, "adidas"} };
 
 class OverCoat
@@ -26,7 +24,7 @@ class OverCoat
 	double _price; //rub
 public:
 	// Constructors // Initialisation // Destructors // Memory Clean -------
-	OverCoat(std::string comment, Dress_size size, Material_type overcoat_material_type,	OverCoat_colors color, Overcoat_length_type length, double _price);
+	OverCoat(Overcoat_length_type length, Manufacter _manufacter, OverCoat_colors color, Material_type overcoat_material_type, Dress_size size, std::string comment, double _price);
 	OverCoat(char random_flag) 
 	{
 		//OverCoat* new_item = new OverCoat;
@@ -45,13 +43,17 @@ public:
 		//_color = OverCoat_colors::black;		
 
 		//std::cout << "Vector reallocates memory";
-		//_getch();
+		//_getch();	
 	}
-	static void Memory_Clean();
 
-	static void Get_methods()
+	//std::map <int, std::string>& Get_methods()
+	std::vector <int>& Get_methods()
 	{
-
+		//codes_of_operation
+		//{ {1," + "}, {2," - "}, {3," * "}, {4, " / "}, {5, " * "}, {6," / "}, {7, " > "}, {8," < "},{9," = "}, {0, "=="} };
+		 std::vector <int> available_operations{ 7, 8, 9, 0 };
+		//std::map <int, int> available_operands {{}}
+		 return available_operations;
 	}
 
 	// Setters // Getters --------------------------------------------------
@@ -63,25 +65,33 @@ public:
 	void ShowValues() { std::cout << *this; }
 	//void ShowValues() { std::cout << this; }
 
-	static void ShowMethods();
+	static std::string Open_Interface_Info()
+	{
+		std::string Open_Interface_Info;
+		Open_Interface_Info += "Constructors:\n- Random (char parametr)\n- Detailed (all fieleds)";
+		Open_Interface_Info += "\nMethods:";
+		Open_Interface_Info += "\n1) ShowValues()";
+		Open_Interface_Info += "\n2) Set_comment(string)";
+		Open_Interface_Info += "\n3) Set_price(double)";
+			
+		return Open_Interface_Info;
+	}
 
-	//Overload operators - reference returned -----------------------------------------
+	//Overload operators ---------------------------------------------------
+		
+	bool operator > (const OverCoat& another_Money) const;
+	
+	bool operator < (const OverCoat& another_Money) const;
+	
+	bool operator == (const OverCoat& another_Money) const;
 
-	//OverCoat* operator+(OverCoat & another_Money);
-	OverCoat& operator+(const OverCoat& another_Money) const;
-	OverCoat& operator-(const OverCoat& another_Money) const;
-	OverCoat& operator*(const OverCoat& another_Money) const;
-	OverCoat& operator*(double multiplier) const;
-	OverCoat& operator/(double divider) const;
-	double operator/(const OverCoat& another_Money) const;
-	bool operator>(const OverCoat& another_Money) const;
-	bool operator<(const OverCoat& another_Money) const;
-	bool operator==(const OverCoat& another_Money) const;
+	bool operator = (const OverCoat& another_Money);
+
 
 	friend std::ostream& operator << (std::ostream& out, OverCoat* just_a_Money);
 	friend std::ostream& operator << (std::ostream& out, OverCoat& OverCoat_obj)
 	{
-		std::cout << std::endl << OverCoat_obj._length;
+		//std::cout << std::endl << OverCoat_obj._length;
 		std::cout << std::endl << Manufacter_codename[int(OverCoat_obj._manufacter)];
 
 	}

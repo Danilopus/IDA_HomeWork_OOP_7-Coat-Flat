@@ -8,6 +8,9 @@
 #include <iomanip>
 #include <cassert>
 #include "OverCoat.h"
+#include "UnitTest.h"
+
+std::map <int, std::string> codes_of_operation{ {1," + "}, {2," - "}, {3," * "}, {4, " / "}, {5, " * "}, {6," / "}, {7, " > "}, {8," < "},{9," = "}, {0, "=="} };
 
 
 class Contain_and_Handle
@@ -42,7 +45,7 @@ public:
 		switch (_getch_to_int(1, 2))
 		{
 		case -1: return;
-		case 1: UnitTest::OverCoat_testing(); break;
+		case 1: UnitTest::OverCoat_test(); break;
 		case 2: UserChoiceHandle_getch; break;
 		}
 

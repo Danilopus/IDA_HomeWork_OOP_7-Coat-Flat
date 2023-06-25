@@ -133,12 +133,14 @@
     <ClCompile Include="OverCoat.cpp" />
     <ClCompile Include="!IDA_Home_DEFAULT.cpp" />
     <ClCompile Include="Service functions.cpp" />
+    <ClCompile Include="UnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Contain_and_Handle.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OverCoat.h" />
     <ClInclude Include="Service functions.h" />
+    <ClInclude Include="UnitTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
