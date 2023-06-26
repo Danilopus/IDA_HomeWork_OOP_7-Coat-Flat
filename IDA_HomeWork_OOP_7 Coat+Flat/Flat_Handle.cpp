@@ -1,13 +1,13 @@
-#include "Flat_Handle.h"
+п»ї#include "Flat_Handle.h"
 
 std::map <int, std::string> Flat_Handle::keycodes{ {27, "Esc"}, {13, "Enter"}, {48, "0"}, {57, "9"} };
 std::string Flat_Handle::console_clear = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
 std::string Flat_Handle::big_space = "                                                           ";
 std::map <int, int> Flat_Handle::codes_of_digits{ {49, 0}, {50, 1}, {51, 2},{52, 3},{53, 4},{54, 5},{55, 6},{56, 7},{57, 8} };
-// Операции с дробями 
+// РћРїРµСЂР°С†РёРё СЃ РґСЂРѕР±СЏРјРё 
 //std::map <int, std::string> Fraction::codes_of_operation{ {1," + "}, {2," - "}, {3," * "}, {4, " / "}, {5, "++"}, {6,"++"}, {7, "--"}, {8,"--"},{9,"+"}, {0, "-"} };
 
-// Стандартный набор операций
+// РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РЅР°Р±РѕСЂ РѕРїРµСЂР°С†РёР№
 std::map <int, std::string> Flat_Handle::codes_of_operation{ {1," + "}, {2," - "}, {3," * "}, {4, " / "}, {5, " * "},
 	{6," / "}, {7, " > "}, {8," < "},{9," = "}, {0, "=="},
 	{11, " ++"} /*prefix*/,  {12, "++ "} /*postfix*/, {13, " --"}, {14, "-- "}, {15, " +"}, {16, " -"} };

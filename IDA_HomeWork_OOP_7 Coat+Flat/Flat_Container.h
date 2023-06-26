@@ -20,7 +20,6 @@ class Flat_Container
 		// Constructors // Initialisation // Destructors // Memory Clean -------
 		static void Initialisation(int random_number)
 		{
-
 			for (int i = 0; i < random_number; i++)
 			{
 				Flat* new_item = new Flat(7);
