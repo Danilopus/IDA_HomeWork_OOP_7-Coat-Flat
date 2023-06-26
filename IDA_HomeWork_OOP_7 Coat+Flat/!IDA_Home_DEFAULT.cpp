@@ -27,12 +27,12 @@
 #include <time.h>
 #include <algorithm>
 #include <conio.h>
-//#include <array>
 //My own headers
 #include "Service functions.h"
 #include "MainMenu.h"
 #include "OverCoat.h"
 #include "Contain_and_Handle.h"
+#include "Flat_Handle.h"
 
 
 
@@ -57,7 +57,19 @@ void Task_1(std::string name_of_task)
 }
 
 //Task 2
-void Task_2(){}
+void Task_2(std::string name_of_task)
+{
+	do
+	{
+		system("cls");
+		std::cout << "***\t" << name_of_task << "\n";
+
+		if (Flat_Handle::Mode_Input_Handle()) break;
+
+		std::cout << "\n\nEsc - exit | any key to continue";
+	} while (_getch() != 27);
+	Flat_Container::Memory_Clean();
+}
 
 //Task 3 
 void Task_3() {}
@@ -74,7 +86,7 @@ int main()
 	Main_menu MainMenu;	
 	MainMenu.AddElement("OOP Home Work 07: ");	// Homework name
 	MainMenu.AddElement("Overcoat class demo with overloaded operators: = | == | < | > ");
-	//MainMenu.AddElement("Flat class demo with overloaded operators: = | == | < | > ");
+	MainMenu.AddElement("Flat class demo with overloaded operators: = | == | < | > ");
 
 	//MainMenu.AddElement("XXX");
 

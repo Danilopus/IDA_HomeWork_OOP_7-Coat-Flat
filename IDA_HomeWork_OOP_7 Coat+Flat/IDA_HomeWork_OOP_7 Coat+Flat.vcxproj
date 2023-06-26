@@ -129,6 +129,11 @@
   <ItemGroup>
     <ClCompile Include="!___questions___.cpp" />
     <ClCompile Include="Contain_and_Handle.cpp" />
+    <ClCompile Include="Flat.cpp" />
+    <ClCompile Include="Flat_Container.cpp" />
+    <ClCompile Include="Flat_Handle.cpp" />
+    <ClCompile Include="Flat_UnitTest.cpp" />
+    <ClCompile Include="inHabbitant.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="OverCoat.cpp" />
     <ClCompile Include="!IDA_Home_DEFAULT.cpp" />
@@ -137,6 +142,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Contain_and_Handle.h" />
+    <ClInclude Include="Flat.h" />
+    <ClInclude Include="Flat_Container.h" />
+    <ClInclude Include="Flat_Handle.h" />
+    <ClInclude Include="Flat_UnitTest.h" />
+    <ClInclude Include="inHabbitant.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OverCoat.h" />
     <ClInclude Include="Service functions.h" />
